@@ -19,10 +19,6 @@ export class LeadService {
         email: dto.email,
         phone: dto.phone,
         address: dto.address,
-        city: dto.city,
-        state: dto.state,
-        zip: dto.zip,
-        leadType: dto.leadType,
         estimatedRevenue: dto?.estimatedRevenue || null,
         forecastedRevenue: dto?.estimatedRevenue || null,
         actualRevenue: 0,
@@ -105,6 +101,9 @@ export class LeadService {
 
     const leadsPromise = this.prisma.lead.findMany({
       where,
+      orderBy: {
+        createdAt: 'desc',
+      },
       include: {
         user: {
           select: {

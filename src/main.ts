@@ -12,7 +12,7 @@ async function bootstrap() {
 
   await seedDatabase();
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapterHost, config));
 
   await app.listen(3000);

@@ -31,10 +31,6 @@ model Lead {
   email             String
   phone             String
   address           String
-  city              String
-  state             String
-  zip               String?
-  leadType          LeadType   @map("lead_type")
   status            LeadStatus @default(NEW)
   forecastedRevenue Int?
   estimatedRevenue  Int?
@@ -43,12 +39,6 @@ model Lead {
   user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt         DateTime   @default(now()) @map("created_at")
   updatedAt         DateTime   @updatedAt @map("updated_at")
-}
-
-enum LeadType {
-  INBOUND
-  OUTBOUND
-  REFERRAL
 }
 
 enum LeadStatus {

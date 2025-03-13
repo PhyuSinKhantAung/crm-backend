@@ -6,11 +6,7 @@ export type Lead = {
   email: string;
   phone: string;
   address: string;
-  city: string;
-  state: string;
-  zip: string | null;
-  leadType: string;
-  status: string;
+  status: LeadStatus;
   forecastedRevenue: number | null;
   estimatedRevenue: number | null;
   actualRevenue: number | null;

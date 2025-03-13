@@ -35,7 +35,16 @@ export class AuthService {
 
     const payload = { sub: user.id, email: user.email, role: user.role };
 
-    return this.generateToken(payload);
+    const { accessToken } = await this.generateToken(payload);
+
+    return {
+      accessToken,
+      user: {
+        id: user.id,
+        role: user.role,
+        email: user.email,
+      },
+    };
   }
 
   async generateToken(payload: {

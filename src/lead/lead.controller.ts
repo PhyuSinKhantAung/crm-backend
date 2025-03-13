@@ -62,4 +62,18 @@ export class LeadController {
       message: 'Lead Updated successfully!',
     };
   }
+
+  // @UseGuards(JwtGuard, RoleGuard)
+  // @Roles(userRole.ADMIN, userRole.SUPER_ADMIN)
+  // @Get('/forecast-revenue-report')
+  // async getTotalForecastRevenueReport() {
+  //   return await this.leadService.getTotalForecastRevenueReport();
+  // }
+
+  // @UseGuards(JwtGuard, RoleGuard)
+  // @Roles(userRole.ADMIN, userRole.SUPER_ADMIN)
+  // @Get('/:id/forecast-revenue-report')
+  // async getLeadForecastRevenueReportById(@Param('id') id: string) {
+  //   return await this.leadService.getLeadForecastRevenueReportById(id);
+  // }
 }

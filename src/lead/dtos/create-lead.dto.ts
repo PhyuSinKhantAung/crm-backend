@@ -1,4 +1,4 @@
-import { LeadType } from '@prisma/client';
+import { Transform } from 'class-transformer';
 import {
   IsEmail,
   IsEnum,
@@ -27,25 +27,11 @@ export class CreateLeadDto {
   @IsNotEmpty()
   address: string;
 
-  @IsString()
-  @IsNotEmpty()
-  city: string;
-
-  @IsString()
-  @IsNotEmpty()
-  state: string;
-
-  @IsString()
-  @IsOptional()
-  zip: string;
-
-  @IsEnum(LeadType)
-  @IsString()
-  @IsNotEmpty()
-  leadType: LeadType;
-
   @IsInt()
   @IsNumber()
   @IsNotEmpty()
+  @Transform(({ value }) => (value ? Number(value) : value), {
+    toClassOnly: true,
+  }) // Transform string to number
   estimatedRevenue: number;
 }
