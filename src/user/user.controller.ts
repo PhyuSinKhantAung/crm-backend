@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { JwtGuard } from '../auth/guards';
+import { JwtGuard, RoleGuard } from '../auth/guards';
 import { GetUser, Roles } from '../auth/decorators';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { userRole } from './types';
@@ -26,15 +26,13 @@ export class UserController {
     return user;
   }
 
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, RoleGuard)
+  @Roles(userRole.SUPER_ADMIN)
   @Post('/create')
   async createUser(@Body() dto: CreateUserDto, @GetUser('id') id: string) {
     const currentUser = await this.userService.getUserById(id);
 
     if (!currentUser) throw new NotFoundException('User Not Found!');
-
-    if (currentUser?.role !== userRole.SUPER_ADMIN)
-      throw new UnauthorizedException('You are not authorized to create user!');
 
     await this.userService.createUser(dto);
 
