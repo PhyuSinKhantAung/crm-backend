@@ -4,10 +4,14 @@ import * as argon from 'argon2';
 import { CreateUserDto } from '../../src/user/dtos/create-user.dto';
 import { User } from './types';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { LeadService } from 'src/lead/lead.service';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private leadService: LeadService,
+  ) {}
 
   async createUser(dto: CreateUserDto) {
     const hashedPassword = await argon.hash(dto.password);
@@ -47,5 +51,9 @@ export class UserService {
         email: dto.email,
       },
     });
+  }
+
+  async getUserLeads(userId: string) {
+    return this.leadService.getLeads({ userId });
   }
 }

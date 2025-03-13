@@ -12,7 +12,6 @@ import { JwtGuard, RoleGuard } from '../auth/guards';
 import { GetUser, Roles } from '../auth/decorators';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { userRole } from './types';
-// import checkSelfPermissioin from '../../src/utils/check-self-permission';
 
 @Controller('users')
 export class UserController {
@@ -40,5 +39,16 @@ export class UserController {
       status: 200,
       message: 'User created successfully!',
     };
+  }
+
+  @UseGuards(JwtGuard, RoleGuard)
+  @Roles(userRole.SALE_PERSON)
+  @Get('/me/leads')
+  async getUserLeads(@GetUser('id') id: string) {
+    const currentUser = await this.userService.getUserById(id);
+
+    if (!currentUser) throw new NotFoundException('User Not Found!');
+
+    return await this.userService.getUserLeads(currentUser.id);
   }
 }
